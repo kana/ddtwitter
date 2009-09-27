@@ -63,7 +63,7 @@ END
         exit 1
       end
 
-      do_command given_command
+      do_command given_command, ARGV[1..ARGV.length]
 
       0
     end
@@ -78,6 +78,10 @@ END
       }.map {|method_name|
         method_name.sub /^command_/, ''
       }
+    end
+
+    def do_command(command_name, args)
+      method('command_' + command_name).call args
     end
   end
 end
