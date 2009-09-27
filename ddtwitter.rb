@@ -37,16 +37,16 @@ module DDTwitter
   VERSION = '0.0.0'
 
   class Driver
-    def do_command(command_name, args)
-      method('command_' + command_name).call args
-    end
-
     def available_commands()
       return methods.filter {|method_name|
         method_name =~ /^command_/
       }.map {|method_name|
         method_name.sub /^command_/, ''
       }
+    end
+
+    def do_command(command_name, args)
+      method('command_' + command_name).call args
     end
 
     def main(args)
