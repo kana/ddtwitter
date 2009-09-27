@@ -25,6 +25,11 @@ require 'pp'
 require 'rubygems'
 require 'twitter'
 
+module Enumerable
+  alias :filter :find_all
+  alias :contains? :member?
+end
+
 
 
 
@@ -52,25 +57,27 @@ END
         exit 1
       end
 
-      command =  ARGV[0]
-      if command == 'fetch'
-      elsif command == 'block'
-      elsif command == 'conversation-of'
-      elsif command == 'favorite'
-      elsif command == 'follow'
-      elsif command == 'list'
-      elsif command == 'post'
-      elsif command == 'remove'
-      elsif command == 'reply'
-      elsif command == 'send-direct-message'
-      elsif command == 'temporary-block'
-      elsif command == '...'
-        puts '...'
-      else
-        puts "Invalid command: #{command}"
+      given_command =  ARGV[0]
+      if not valid_command? given_command
+        puts "Invalid command: #{given_command}"
         exit 1
       end
+
+      do_command given_command
+
       0
+    end
+
+    def valid_command?(command_name)
+      return list_of_commands.contains? command_name
+    end
+
+    def list_of_commands()
+      return methods.filter {|method_name|
+        method_name =~ /^command_/
+      }.map {|method_name|
+        method_name.sub /^command_/, ''
+      }
     end
   end
 end
