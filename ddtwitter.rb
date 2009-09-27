@@ -66,18 +66,18 @@ END
 
       if ARGV.length == 0
         puts 'Command is required.'
-        exit 1
+        return 1
       end
 
       given_command =  ARGV[0]
       if not valid_command? given_command
         puts "Invalid command: #{given_command}"
-        exit 1
+        return 1
       end
 
       do_command given_command, ARGV[1..ARGV.length]
 
-      0
+      return 0
     end
 
     def valid_command?(command_name)
