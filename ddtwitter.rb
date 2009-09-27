@@ -41,7 +41,7 @@ module DDTwitter
       method('command_' + command_name).call args
     end
 
-    def list_of_commands()
+    def available_commands()
       return methods.filter {|method_name|
         method_name =~ /^command_/
       }.map {|method_name|
@@ -81,7 +81,7 @@ END
     end
 
     def valid_command?(command_name)
-      return list_of_commands.contains? command_name
+      return available_commands.contains? command_name
     end
   end
 end
