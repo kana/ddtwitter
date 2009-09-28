@@ -37,8 +37,8 @@ module DDTwitter
   VERSION = '0.0.0'
 
   class Command
-    def command_name()
-      return self.class.to_s.
+    def self.command_name()
+      return self.to_s.
         split(/::/)[-1].
         sub(/^Command/, '').
         split(/(?=[A-Z])/).
@@ -65,11 +65,9 @@ module DDTwitter
 
   class Driver
     def available_commands()
-      return methods.filter {|method_name|
-        method_name =~ /^command_/
-      }.map {|method_name|
-        method_name.sub /^command_/, ''
-      }
+      return DDTwitter.constants.
+        filter {|_| _ =~ /^Command([A-Z][a-z]*)+$/}.
+        map {|_| eval(_).command_name}
     end
 
     def do_command(command_name, args)
