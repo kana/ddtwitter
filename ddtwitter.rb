@@ -92,10 +92,12 @@ END
 
         o.on('-h', '--help', 'Show terse help.') do
           puts o.help
+          return 0
         end
 
         o.on('-v', '--version', 'Show version information.') do
           puts "DDTwitter #{DDTwitter::VERSION}"
+          return 0
         end
       end.parse!
 
