@@ -46,8 +46,8 @@ module DDTwitter
              new
     end
 
-    def self.command_name()
-      return self.to_s.
+    def self.command_name_from_class_name(class_name)
+      return class_name.
         split(/::/)[-1].
         sub(/^Command/, '').
         split(/(?=[A-Z])/).
@@ -76,7 +76,7 @@ module DDTwitter
     def available_commands()
       return DDTwitter.constants.
         filter {|_| _ =~ /^Command([A-Z][a-z]*)+$/}.
-        map {|_| eval(_).command_name}
+        map {|_| Command.command_name_from_class_name _}
     end
 
     def do_command(command_name, args)
