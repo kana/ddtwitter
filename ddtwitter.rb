@@ -36,6 +36,33 @@ end
 module DDTwitter
   VERSION = '0.0.0'
 
+  class Command
+    def command_name()
+      return self.class.to_s.
+        split(/::/)[-1].
+        sub(/^Command/, '').
+        split(/(?=[A-Z])/).
+        map {|_| _.downcase}.
+        join('-')
+    end
+
+    def do(*args)
+      raise NotImplementedError
+    end
+
+    def help(*args)
+      raise NotImplementedError
+    end
+  end
+
+  class CommandBlock < Command
+  end
+
+  class CommandPost < Command
+  end
+
+  # More commands.
+
   class Driver
     def available_commands()
       return methods.filter {|method_name|
