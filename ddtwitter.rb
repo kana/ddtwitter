@@ -37,9 +37,9 @@ module DDTwitter
   VERSION = '0.0.0'
 
   class Command
-    def self.command_from_name(name)
+    def self.command_from_command_name(command_name)
       return eval('Command' +
-                  name.
+                  command_name.
                   split(/-/).
                   map {|_| _[0].chr.upcase + _[1..._.length]}.
                   join('')).
@@ -80,7 +80,7 @@ module DDTwitter
     end
 
     def do_command(command_name, args)
-      command = Command.command_from_name(command_name)
+      command = Command.command_from_command_name(command_name)
       command.do(*args)
     end
 
